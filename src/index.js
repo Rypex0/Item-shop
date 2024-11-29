@@ -56,6 +56,22 @@ function GetRemainingTime() {
     return `${Hours}:${Minutes}:${Seconds}`;
 }
 
+function IsAfter7PM() {
+    const CurrentTime = moment.tz("America/New_York");
+    return CurrentTime.hour() >= 19;
+}
+
+async function UpdateItems() {
+    if (IsAfter7PM() && CachedItems.length === 0) {
+        CachedItems = await FetchItems();
+    }
+}
+
+system.get('/item-shop', async (req, res) => {
+    await UpdateItems();
+    res.json(CachedItems);
+})
+
 system.get('/countdown', (req, res) => {
     const RemainingTime = GetRemainingTime();
     res.json({ time: RemainingTime });
