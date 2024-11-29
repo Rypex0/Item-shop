@@ -70,7 +70,7 @@ async function UpdateItems() {
 system.get('/item-shop', async (req, res) => {
     await UpdateItems();
     res.json(CachedItems);
-})
+});
 
 system.get('/countdown', (req, res) => {
     const RemainingTime = GetRemainingTime();
