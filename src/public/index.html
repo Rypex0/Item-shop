@@ -1,36 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            body {
-                background-color: #111;
-                font-family: 'Franklin Gothic Medium', sans-serif;
-                color: #fff;
-                margin: 0;
-                padding: 0;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #111;
+            font-family: 'Franklin Gothic Medium', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
 
-            h1 {
-                text-align: center;
-                font-size: 45px;
-                padding: 20px;
-                color: #fff;
-            }
+        h1 {
+            text-align: center;
+            font-size: 45px;
+            padding: 20px;
+            color: #fff;
+        }
 
-            .countdown {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                background-color: #444;
-                padding: 10px 20px;
-                border-radius: 5px;
-                font-size: 18px;
-                font-weight: bold;
-                font-family: 'Franklin Gothic Medium', sans-serif;
-                color: #fff;
-            }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #ffb400;
+        }
+
+        .featured-items,
+        .daily-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #444;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Franklin Gothic Medium', sans-serif;
+            color: #fff;
+        }
         </style>
     </head>
 <body>
@@ -38,6 +55,12 @@
 <h1>Fortnite Item Shop</h1>
 
 <div class="countdown" id="countdown">Next Refresh In: 00:00:00</div>
+
+<div class="section-title">FEATURED ITEMS</div>
+<div class="featured-items" id="featured-items"></div>
+
+<div class="section-title">DAILY ITEMS</div>
+<div class="daily-items" id="daily-items"></div>
 
 <script>
     function UpdateCountdown() {
@@ -52,6 +75,7 @@
 
     setInterval(UpdateCountdown, 1000);
 
+    
     UpdateCountdown();
 </script>
 

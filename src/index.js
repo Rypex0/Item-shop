@@ -6,9 +6,39 @@ const system = express();
 
 const PORT = 8888;
 
-const SpreadsheetURL = '';
+const SpreadsheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTM0QfM2QuDPNwfZYL51ct8_YG83I7xEqSOMutEWcIklFK80vix8MqXqHTFt3Z5HBUx8xKbsqgQNgXl/pub?gid=977965621&single=true&output=csv';
 
 let CachedItems = [];
+
+async function FetchItems() {
+    try {
+        const response = await axios.get(SpreadsheetURL);
+        const csvData = response.data;
+
+        const rows = csvData.split('\n');
+        const items = rows.slice(1).map(row => {
+            const columns = row.split(',');
+            return {
+                image: columns[0].trim(),
+                name: columns[1].trim(),
+                price: columns[2].trim(),
+                rarity: columns[3].trim(),
+            };
+        });
+
+        const SelectedItems = [];
+        for (let i = 0; i < 8; i++) {
+            const RandomIndex = Math.floor(Math.random() * items.length);
+            SelectedItems.push(items[RandomIndex]);
+            items.splice(RandomIndex, 1);
+        }
+
+        return SelectedItems;
+    } catch (error) {
+        console.error('Error Fetching Data From The Spreadsheet:', error);
+        return [];
+    }
+}
 
 function GetRemainingTime() {
     const CurrentTime = moment.tz("America/New_York");
