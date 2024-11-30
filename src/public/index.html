@@ -63,6 +63,49 @@
 <div class="daily-items" id="daily-items"></div>
 
 <script>
+    const VBucksIcon = 'https://purepng.com/public/uploads/large/one-v-buck-dpf.png';
+
+    function UpdateItems() {
+        fetch('/item-shop')
+        .then(response => response.json())
+        .then(items => {
+            const FeaturedContainer = document.getElementById('featured-items');
+            const DailyContainer = document.getElementById('daily-items');
+
+            const FeaturedItems = items.slice(0, 2);
+            const DailyItems = items.slice(2);
+
+            const CreateItemElement = (item) => {
+                const ItemElement = document.createElement('div');
+                ItemElement.classList.add('item', item.rarity.trim());
+
+                ItemElement.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="info">
+                    <div class="name">${item.name}</div>
+                    <div class="price">
+                        ${item.price}
+                        <img src="${VBucksIcon}" alt="V-Bucks">
+                    </div>
+                </div>
+                `;
+
+                return ItemElement;
+            };
+
+            FeaturedItems.forEach(item => {
+                const ItemElement = CreateItemElement(item);
+                FeaturedContainer.appendChild(ItemElement);
+            });
+
+            DailyItems.forEach(item => {
+                const ItemElement = CreateItemElement(item);
+                DailyContainer.appendChild(ItemElement);
+            });
+        })
+        .catch(error => console.error('Error Fetching Items:', error));
+    }
+
     function UpdateCountdown() {
         fetch('/countdown')
         .then(response => response.json())
@@ -75,7 +118,7 @@
 
     setInterval(UpdateCountdown, 1000);
 
-
+    UpdateItems();
     UpdateCountdown();
 </script>
 
